@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>太极图-Canvas</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        #taichi {
+            border: 1px solid lightblue;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            let taichi = document.querySelector('#taichi');
+            let ctx = taichi.getContext('2d');
+            var i = 1
+
+            function biground() {
+                // 大圆边框
+                ctx.beginPath();
+                ctx.fillStyle = '#000';
+                ctx.arc(300, 300, 300, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.closePath();
+                // 大圆左半边
+                ctx.beginPath();
+                ctx.fillStyle = '#000';
+                ctx.arc(300, 300, 300, Math.PI * 1 / 2, Math.PI * 3 / 2, true);
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            function midle() {
+                var a = 300 - Math.sin(Math.PI / 180 * i) * 150;
+                var b = 300 - Math.cos(Math.PI / 180 * i) * 150;
+
+                ctx.beginPath();
+                ctx.fillStyle = "#000";
+                ctx.arc(a, b, 150, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath();
+
+                ctx.beginPath();
+                ctx.fillStyle = "#fff";
+                ctx.arc(a, b, 75, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath()
+
+            }
+
+
+            function small(x, y) {
+                var x = 300 + Math.sin(Math.PI / 180 * i) * 150;
+                var y = 300 + Math.cos(Math.PI / 180 * i) * 150;
+                ctx.beginPath();
+                ctx.fillStyle = "#fff";
+                ctx.arc(x, y, 150, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath()
+
+                ctx.beginPath();
+                ctx.fillStyle = "#000";
+                ctx.arc(x, y, 75, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath()
+            }
+
+
+            biground() //大圆左半边
+
+            setInterval(function () {
+                midle()
+                small()
+                i++;
+            }, 10)
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <h1>太极图</h1>
+    <canvas id="taichi" width="600" height="600"></canvas>
+</body>
+
+</html>
+
+<script>
+    context.clearRect(x, y, width, height);
+
+
+    context.arc(x, y, radius, Math.PI / 180 * startAngle, Math.PI / 180 * endAngle, anticlockwise);
+
+    context.translate(x, y);
+    context.rotate(Math.PI / 180 * degree);
+    context.scale(x, y);
+    context.transform(a, b, c, d, e, f);
+    context.setTransform(a, b, c, d, e, f)
+    // a 水平旋转绘图
+    // b 水平倾斜绘图
+    // c 垂直倾斜绘图
+    // d 垂直缩放绘图
+    // e 水平移动绘图
+    // f 垂直移动绘图
+</script>

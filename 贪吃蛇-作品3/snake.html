@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>贪吃蛇</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        #canvas {
+            border: #ccc 1px solid;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var canvas = document.querySelector('#canvas');
+            var context = canvas.getContext('2d');
+
+            var x = 8, //蛇初始x坐标
+                y = 8, //蛇初始y坐标
+                size = 8, //蛇初始大小
+                timer = null, //计时器
+                len = 10, //身体大小
+                speed = 100, //速度
+                map = [], //坐标数组
+                direction = 2, //方向
+                foodx = 0, //食物x坐标
+                footy = 0; //食物y坐标
+
+            // 按键判断
+            document.onkeyup = function (ev) {
+                direction = ev.keyCode - 37;
+            }
+
+            function snakegame() {
+                // 按键判断
+                switch (direction) {
+                    case 0:
+                        x = x - size;
+                        break;
+                    case 1:
+                        y = y - size;
+                        break;
+                    case 2:
+                        x = x + size;
+                        break;
+                    case 3:
+                        y = y + size;
+                        break;
+                }
+
+
+                // 边界判断
+                if (x > canvas.width || y > canvas.height || x < 0 || y < 0) {
+                    clearTimeout(timer);
+                    alert('游戏结束')
+                }
+
+                // 长度判断
+                if (map.length > len) {
+                    var clearfoot = map.shift();
+                    context.clearRect(clearfoot['x'], clearfoot['y'], size, size);
+                }
+
+                // 碰撞检测
+                var crash = map.some(elm => elm.x == x && elm.y == y)
+                if (crash) {
+                    clearTimeout(timer);
+                    alert('游戏结束')
+                }
+
+                map.push({
+                    x: x,
+                    y: y
+                });
+
+                context.fillStyle = 'blue';
+                context.fillRect(x, y, size, size);
+
+                // 判断是否吃到食物
+                if (foodx * 8 == x && foody * 8 == y) {
+                    len++;
+                    food()
+                }
+            }
+
+            // 随机产生食物
+            function food() {
+                context.fillStyle = 'red';
+                foodx = Math.round(Math.random() * 50);
+                foody = Math.round(Math.random() * 50);
+                context.fillRect(foodx * 8, foody * 8, size, size);
+            }
+
+            food()
+
+            timer = setInterval(snakegame, speed)
+
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <a href="../index.html">
+        <h2>首页</h2>
+    </a>
+    <h1>贪吃蛇-canvas</h1>
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+
+</html>
